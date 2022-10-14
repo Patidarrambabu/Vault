@@ -1,0 +1,56 @@
+from pathlib import Path
+
+from .cognito_config import *
+from .rest_config import *
+from .s3_config import *
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ["*"]
+
+# Application definition
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # third party
+    "phonenumber_field",
+    "rest_framework",
+    "storages",
+    "django_celery_beat",
+    "django_celery_results",
+    # local
+    "accounts.apps.AccountsConfig",
+    "company.apps.CompanyConfig",
+    "driver.apps.DriverConfig",
+    "equipments.apps.EquipmentsConfig",
+    "load.apps.LoadConfig",
+    "dispatch.apps.DispatchConfig",
+    "notification.apps.NotificationConfig",
+    "channels"
+]
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "metro_tms.middleware.EBHealthCheckMiddleware",  # For AWS health check
+]
