@@ -218,7 +218,8 @@ void coinChange(){
 
 	//space optimiation
 
-	int dp[W+1] = {0};
+	int dp[W+1];
+	memset(dp, 0, sizeof dp);
 	dp[0] = 1;
 
 	for(int i=1;i<=n;i++){
@@ -319,7 +320,7 @@ int minCoinsRecr(int ar[],int n,int W){
 
 	return dp[n][W] = min(minCoinsRecr(ar,n-1,W),minCoinsRecr(ar,n,W-ar[n-1])+1);
 
-	return dp[n][W] = minCoinsRecr(arn,n-1,W);
+	return dp[n][W] = minCoinsRecr(ar,n-1,W);
 }
 
 int lCSrecr(string s1,string s2,int i,int j){
