@@ -1,3 +1,6 @@
+import math
+import random
+# libraries also needed here
 def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
