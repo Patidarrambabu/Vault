@@ -245,108 +245,108 @@ int main(){
 }
 
 
-// int mod = 1000000007;
-// #define long long long int
+int mod = 1000000007;
+#define long long long int
 
-// struct Node{
-//   long pref;
-//   long suf;
-//   long sum;
-//   long ans;
-// };
+struct Node{
+  long pref;
+  long suf;
+  long sum;
+  long ans;
+};
 
-// class SG{
+class SG{
 
-//   vector<long> ar;
-//   vector<Node> tree;
+  vector<long> ar;
+  vector<Node> tree;
   
-//   int N;
+  int N;
 
-//   public:
-//     SG(int n): N(n) , ar(n) , tree(4*n){
-//         for(int i=0;i<n;i++)
-//           cin>>ar[i];
-//     }
-//     void build(int n,int s,int e){
-//       if(s == e){
-//           if(ar[s]<=0){
-//             tree[n] = {0,0,ar[s],0};
-//           }else{
-//             tree[n] = {ar[s],ar[s],ar[s],ar[s]};
-//           }      
-//           return; 
-//       }
+  public:
+    SG(int n): N(n) , ar(n) , tree(4*n){
+        for(int i=0;i<n;i++)
+          cin>>ar[i];
+    }
+    void build(int n,int s,int e){
+      if(s == e){
+          if(ar[s]<=0){
+            tree[n] = {0,0,ar[s],0};
+          }else{
+            tree[n] = {ar[s],ar[s],ar[s],ar[s]};
+          }      
+          return; 
+      }
 
-//       int mid = (s+e)/2;
-//       build(2*n,s,mid);
-//       build(2*n+1,mid+1,e);
+      int mid = (s+e)/2;
+      build(2*n,s,mid);
+      build(2*n+1,mid+1,e);
 
-//       long pref,suf,sum,ans;
-//       pref = max( tree[2*n].pref , tree[2*n].sum + tree[2*n+1].pref);
-//       suf = max( tree[2*n+1].suf , tree[2*n+1].sum + tree[2*n].suf);
-//       sum = tree[2*n].sum + tree[2*n+ 1].sum ;
-//       ans = max( tree[2*n].suf + tree[2*n+1].pref , max(tree[2*n].ans , tree[2*n+1].ans));
+      long pref,suf,sum,ans;
+      pref = max( tree[2*n].pref , tree[2*n].sum + tree[2*n+1].pref);
+      suf = max( tree[2*n+1].suf , tree[2*n+1].sum + tree[2*n].suf);
+      sum = tree[2*n].sum + tree[2*n+ 1].sum ;
+      ans = max( tree[2*n].suf + tree[2*n+1].pref , max(tree[2*n].ans , tree[2*n+1].ans));
 
-//       tree[n] = {pref,suf,sum,ans};
-//     }
-//     void update(int n,int s,int e,int i,long v){
-//       if(s == e){
-//           ar[s] = v;
+      tree[n] = {pref,suf,sum,ans};
+    }
+    void update(int n,int s,int e,int i,long v){
+      if(s == e){
+          ar[s] = v;
 
-//           if(ar[s]<=0){
-//             tree[n] = {0,0,ar[s],0};
-//           }else{
-//             tree[n] = {ar[s],ar[s],ar[s],ar[s]};
-//           }     
+          if(ar[s]<=0){
+            tree[n] = {0,0,ar[s],0};
+          }else{
+            tree[n] = {ar[s],ar[s],ar[s],ar[s]};
+          }     
 
-//           return;  
-//       }
+          return;  
+      }
 
-//       int mid = (s+e)/2;
+      int mid = (s+e)/2;
 
-//       if(i<=mid)
-//         update(2*n,s,mid,i,v);
-//       else
-//         update(2*n+1,mid+1,e,i,v);
+      if(i<=mid)
+        update(2*n,s,mid,i,v);
+      else
+        update(2*n+1,mid+1,e,i,v);
 
-//       long pref,suf,sum,ans;
-//       pref = max( tree[2*n].pref , tree[2*n].sum + tree[2*n+1].pref);
-//       suf = max( tree[2*n+1].suf , tree[2*n+1].sum + tree[2*n].suf);
-//       sum = tree[2*n].sum + tree[2*n+ 1].sum ;
-//       ans = max( tree[2*n].suf + tree[2*n+1].pref , max(tree[2*n].ans , tree[2*n+1].ans));
+      long pref,suf,sum,ans;
+      pref = max( tree[2*n].pref , tree[2*n].sum + tree[2*n+1].pref);
+      suf = max( tree[2*n+1].suf , tree[2*n+1].sum + tree[2*n].suf);
+      sum = tree[2*n].sum + tree[2*n+ 1].sum ;
+      ans = max( tree[2*n].suf + tree[2*n+1].pref , max(tree[2*n].ans , tree[2*n+1].ans));
 
-//       tree[n] = {pref,suf,sum,ans};
-//     }
-//     void getMax(){
+      tree[n] = {pref,suf,sum,ans};
+    }
+    void getMax(){
 
-//       cout<<tree[1].ans<<endl;
-//     }
-//     void printTree(){
-//       for(auto i: tree)
-//         cout<<i.pref<<" "<<i.suf<<" "<<i.sum<<" "<<i.ans<<endl;
-//       cout<<endl;
-//     }
-// };
+      cout<<tree[1].ans<<endl;
+    }
+    void printTree(){
+      for(auto i: tree)
+        cout<<i.pref<<" "<<i.suf<<" "<<i.sum<<" "<<i.ans<<endl;
+      cout<<endl;
+    }
+};
 
 
-// int main(){
+int main(){
 
-//   int N,M;
-//   cin>>N>>M;
+  int N,M;
+  cin>>N>>M;
 
-//   SG sg(N);
-//   sg.build(1,0,N-1);
-//   sg.getMax();
-//   // sg.printTree();
+  SG sg(N);
+  sg.build(1,0,N-1);
+  sg.getMax();
+  // sg.printTree();
 
-//   while(M--){
-//     int i;
-//     long v;
-//     cin>>i>>v;
+  while(M--){
+    int i;
+    long v;
+    cin>>i>>v;
 
-//     sg.update(1,0,N-1,i,v);
-//     sg.getMax();
-//   }
+    sg.update(1,0,N-1,i,v);
+    sg.getMax();
+  }
   
-//   return 0;
-// }
+  return 0;
+}
