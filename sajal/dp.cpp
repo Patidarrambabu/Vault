@@ -67,14 +67,7 @@ int recr(int ar[],int n,int W){
 		return dp[n][W] = recr(ar,n-1,W);
 }
 
-/** equal subset sum 
- * 
- * find total sum
- * if odd return false
- * if even
- * 	find subsetsum for W = sum/2
- * 
-**/
+
 
 //// count of subsets with sum W
 void countSubsetSum(int ar[],int n,int W){
@@ -121,22 +114,6 @@ void subsetSumDiff(int ar[],int n,int W){
 	cout<<endl<<ans<<endl;
 }
 
-/** count the no of subset with given difference
- * 	s1-s2 = W
- *  s1+s2 = T
- * 
- * 	count of subset with sum s1 = (W+T)/2
- * 
- **/
-
-/**target sum
- * 
- * same as above problem statment in a different way
- * a1+a2-a3-a4+a5-a6....
- * seperate positive and negative subset 
- * s1 - s2
- * 
-**/
 
 //// Unbounded knapsack
 void rodCut(){
@@ -175,31 +152,6 @@ void coinChange(){
 	int ar[] = {1,2,3};
 	int W  = 5;
 	int n = 3;
-
-	// int dp[n+1][W+1];
-
-	// 	for(int i=0;i<=n;i++)
-	// 	dp[i][0] = 1;
-
-	// for(int i=1;i<=W;i++)
-	// 	dp[0][i] = 0;
-
-	// for(int i=1;i<=n;i++){
-	// 	for(int j=0;j<=W;j++){
-	// 		 if(j>=ar[i-1]){
-	// 			dp[i][j] = dp[i-1][j]+dp[i][j-ar[i-1]];
-	// 		}else{
-	// 			dp[i][j] = dp[i-1][j];
-	// 		}
-	// 	}
-	// }
-
-	// for(int i = 0;i<=n;i++){
-	// 	for(int j=0;j<=W;j++){
-	// 		cout<<dp[i][j]<<" ";
-	// 	}cout<<endl;
-	// }
-
 
 	//space optimiation
 
@@ -243,34 +195,6 @@ void minCoins(){
     int n = sizeof(ar) / sizeof(ar[0]);
     int W = 6;
 
-    // int dp[n+1][W+1];
-
-    // for(int i=0;i<=W;i++){
-    // 	dp[0][i] = INT_MAX-1;
-    // }
-
-    // for(int i=1;i<=n;i++){
-    // 	dp[i][0] = 0;
-    // }
-    
-    // for(int i=1;i<=n;i++){
-    // 	for(int j=1;j<=W;j++){
-    // 		// if(j%ar[i-1]==0){
-    // 		// 	dp[i][j] = j%ar[i-1];
-    // 		// }else
-    // 		 if(j>=ar[i-1]){
-    // 			dp[i][j] = min(dp[i-1][j],dp[i][j-ar[i-1]]+1);
-    // 		}else{
-    // 			dp[i][j] = dp[i-1][j];
-    // 		}
-    // 	}
-    // }
-
-    // for(int i=0;i<=n;i++){
-    // 	for(int j=0;j<=W;j++){
-    // 		cout<<dp[i][j]<<" ";
-    // 	}cout<<endl;
-    // }
     int dp[W+1];
 
     dp[0] = 0;
@@ -308,18 +232,6 @@ int minCoinsRecr(int ar[],int n,int W){
 }
 
 int lCSrecr(string s1,string s2,int i,int j){
-	// // bottom up
-	// if(i==0 || j==0)
-	// 	return 0;
-
-	// if(dp[i][j]!=-1)
-	// 	return dp[i][j];
-
-	// if(s1[i-1] == s2[j-1]){
-	// 	return dp[i][j] = 1 + lCSrecr(s1,s2,i-1,j-1);
-	// }
-	// return dp[i][j] = max(lCSrecr(s1,s2,i,j-1),lCSrecr(s1,s2,i-1,j));
-
 
 	// top-down
 	if(i==s1.length() || j ==s2.length())
@@ -403,21 +315,6 @@ void lcsub(string s1,string s2){
 	}
 }
 
-/**
- * shortest common supersequence
- *  geek,eke ===> geeke
- * 
- * find length of lcs
- * output = len(s1) + len(s2) - lcsLength
- * 
- **/
-	
-/**
- * Longest palindromic subsequence
- * 
- * lcs(s1, s1.reverse)
- * 
- **/
 
 //// longest common repeating common subseq
 void lcrs(string s1){
@@ -446,24 +343,172 @@ void lcrs(string s1){
 	}
 }
 
-// int count(vector<int> v,int n,int W){
-// 	if(W<=0)
-// 		return 0;
-// 	if(n<=0)
-// 		return INT_MAX - 1;
+int mcm(int ar[],int i,int j){
+		if(i>=j)
+		return 0;
 
-// 	if(W>=v[n-1])
-// 		return min(count(v,n-1,W),count(v,n,W - v[n-1])+1);
-// 	return count(v,n-1,W);
-// }
+	int ans = INT_MAX;
+	for(int k = i;k<j;k++){
+		int temp = mcm(ar,i,k) + mcm(ar,k+1,j) + ar[i-1]*ar[k]*ar[j];
+		ans = min(ans,temp);
+	}
+	return ans;
+}
 
-// int sqSum(int n){
-// 	vector<int> v;
-// 	for(int i=1;i*i<=n;i++)
-// 		v.push_back(i*i);
+int dp[200][200];
 
-// 	return count(v,v.size(),n);
-// }
+int mcmRecr(int ar[],int i,int j){
+
+	if(i>=j)
+		return 0;
+
+	if(dp[i][j]!=-1)
+		return dp[i][j];
+
+	int ans = INT_MAX;
+	for(int k = i;k<j;k++){
+		int temp = mcm(ar,i,k) + mcm(ar,k+1,j) + ar[i-1]*ar[k]*ar[j];
+		ans = min(ans,temp);
+	}
+	return dp[i][j] = ans;
+}
+
+bool isPalindrome(string s,int i,int j){
+	while(j>i){
+		if(s[i] != s[j])
+			return false;
+		i++;
+		j--;
+	}
+
+	return true;
+}
+
+//// palindrome partition
+int pal(string s,int i,int j){
+	if(i>=j)
+		return 0;
+	if(dp[i][j] != -1)
+		return dp[i][j];
+
+	if(isPalindrome(s,i,j) == true)
+		return 0;
+
+	int ans = INT_MAX;
+	for(int k=i;k<j;k++){
+		int temp = pal(s,i,k) + pal(s,k+1,j) + 1;
+		ans = min(temp,ans);
+	}
+
+	return dp[i][j] = ans;
+}
+
+int boolpar(string s,int i,int j ,bool isTrue){
+	if(i>j)
+		return 0;
+	if(i==j){
+		if(isTrue == true)
+			return s[i]=='T'?1:0;
+		else
+			return s[i]=='F'?1:0;
+	}
+
+	int ans = 0;
+	for(int k=i+1;k<j;k=k+2){
+		int lt = boolpar(s,i,k-1,true);
+		int lf = boolpar(s,i,k-1,false);
+		int rt = boolpar(s,k+1,j,true);
+		int rf = boolpar(s,k+1,j,false);
+
+		if(s[k]=='&'){
+			if(isTrue == true)
+				ans+=lt*rt;
+			else
+				ans+=lf*rt + lt*rf + lf*rf;
+		}
+
+		else if(s[k]=='|'){
+			if(isTrue == true)
+				ans+=lt*rt +lf*rt + lt*rf;
+			else
+				ans+= lf*rf;
+		}else{
+			if(isTrue == true)
+				ans+= lf*rt + lt*rf;
+			else
+				ans+= lf*rf + lt*rt;
+		}
+
+	}
+
+    return ans;
+}
+
+map<string,bool> mp;
+
+bool scram(string a,string b){
+	if(a.compare(b) == 0)
+		return true;
+
+	if(a.length()<=1)
+		return false;
+
+	string key = a + " " + b;
+	if(mp.find(key) != mp.end())
+		return mp[key];
+
+	int n = a.length();
+	bool flag = false;
+
+
+	for(int i=1;i<n;i++){
+		if(
+			(	scram(a.substr(0,i),b.substr(n-i,i)) == true 
+				&&
+		   		scram(a.substr(i,n-i),b.substr(0,i)) == true	
+			) || (
+			    scram(a.substr(0,i),b.substr(0,i)) == true
+			    &&
+			    scram(a.substr(i,n-i),b.substr(i,n-i)) == true)
+		){
+			flag = true;
+			break;
+		}
+	}
+
+	return mp[key] = flag;
+}
+
+
+int eggDrop(int e,int f){
+	if(f==0 || f==1)
+		 return f;
+	if(e==1)
+		return f;
+
+	if(dp[e][f] != -1)
+		return dp[e][f];
+
+	int mn = INT_MAX,l,h;
+	for(int k=1;k<=f;k++){
+
+    if(dp[e-1][k-1]!=-1)
+    	return dp[e-1][k-1];
+    else
+    	 l = dp[e-1][k-1] = eggDrop(e-1,k-1);
+
+    if(dp[e][f-k]!=-1)
+    	return dp[e][f-k];
+    else
+    	 h = dp[e][f-k] = eggDrop(e,f-k);
+
+
+		mn = min(mn ,  1 + max(l,h) );
+	}
+
+	return dp[e][f] = mn;
+}
+
 
 int main(){
 
@@ -479,28 +524,7 @@ int W = 9;
 W=0;
 for(int i=0;i<n;i++)
 	W+=ar[i];
-subsetSumDiff(ar,n,W);
-
-
-// rodCut();
-// coinChange();
-// int ar[] = { 1, 2, 3 };
-// int m = sizeof(ar) / sizeof(ar[0]);
-
-// cout<<coinChangeRecr(ar,m,5);
-// minCoins();
-// cout<<minCoinsRecr(ar,m,3);
-
-// string s1 = "acbcf";
-// string s2 = "abcdaf";
-
-// cout<<lCSrecr(s1,s2,s1.length(),s2.length());
-// cout<<lCSrecr(s1,s2,0,0);
-// lcs(s1,s2);
-// lcsub(s1,s2);
-// lcrs("aabebcddn");
-
-
-
-	return 0;
+ 
+ subsetSumDiff(ar,n,W);
+ return 0;
 }
